@@ -11,7 +11,9 @@
 
 <body>
     <header>
-        <h1>Fynance</h1>
+        <a href="../index.html">
+            <h1>Fynance</h1>
+        </a>
         <a href="/pages/about.html">
             <button>
                 <div>
@@ -57,9 +59,69 @@
             </a>
         </nav>
         <section>
-            <h1>Transactions</h1>
+            <div class="head">
+                <h1>Transactions</h1>
+                <button class="primary" id="add_transaction">
+                    <img src="../assets/icons/plus.png" alt="">
+                    <span>New transaction</span>
+                </button>
+            </div>
+            <!-- The side form - a pain to implement btw :(  -->
+            <div id="form-container" class="hidden">
+                <div class="head">
+                    <h2>New transaction</h2>
+                    <button id="form_close">
+                        <img src="../assets/icons/black_plus.png" alt="">
+                    </button>
+                </div>
+                <form id="form">
+                    <div class="field">
+                        <label for="amount">Amount ($):</label>
+                        <input type="text" id="amount" pattern="\d+" title="Must be numbers" placeholder="Example: 500"
+                            required>
+                    </div>
+                    <div class="field">
+                        <label for="description">Description:</label>
+                        <input type="text" minlength="5" id="description" placeholder="Example: Lunch at KFC" required>
+                    </div>
+                    <div class="selects" id="select_container">
+                        <div class="field">
+                            <label for="category">Category:</label>
+                            <select name="category" id="category" required>
+                                <option value="">Select category</option>
+                                <option value="food">Food</option>
+                                <option value="books">Books</option>
+                                <option value="transaport">Transport</option>
+                                <option value="entertainment">Entertainment</option>
+                                <option value="fees">Fees</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary">Submit</button>
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                <tbody id="table">
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: grey;">No transactions</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- Check for deleting -->
+            
         </section>
     </main>
+    <script src="../scripts/transactions.js"></script>
 </body>
 
 </html>

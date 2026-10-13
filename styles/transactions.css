@@ -1,3 +1,213 @@
 section {
-    padding: 24px;
+  padding: 32px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-x: hidden;
+}
+
+section .head {
+  display: flex;
+  justify-content: space-between;
+}
+
+button.primary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border: none;
+  background: #4c4541;
+  width: max-content;
+  border-radius: 12px;
+  padding: 12px 12px;
+  font-size: 1em;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+button.primary:hover {
+  background: hsl(22, 8%, 40%);
+}
+
+#text {
+  display: none;
+}
+
+button.primary span {
+  display: none;
+}
+
+div#form-container {
+  background: white;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  transition: transform 0.3s ease;
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+  border-left: 1px solid #cccccc;
+}
+
+.hidden {
+  transform: translateX(400px);
+}
+
+#form .head {
+  display: flex;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#form-container img {
+  width: 24px;
+  height: 24px;
+  transform: rotate(45deg);
+}
+
+#form-container .head button {
+  border-radius: 8px;
+  height: 40px;
+  width: 40px;
+  border: none;
+  cursor: pointer;
+  background: hsl(22, 8%, 95%);
+  transition: background 0.3s ease;
+}
+
+#form-container .head button:hover {
+  background: hsl(22, 8%, 90%);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field input {
+  width: 100%;
+  border: 1px solid grey;
+  background: hsl(22, 8%, 95%);
+  outline: none;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+select {
+  width: 100%;
+  border: 1px solid grey;
+  background: hsl(22, 8%, 95%);
+  outline: none;
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.field input:focus {
+  border: 1px solid black;
+}
+
+#form button {
+  width: 100%;
+  justify-content: center;
+}
+
+table {
+  background-color: white;
+  width: 100%;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 12px;
+}
+
+table th {
+  padding: 12px;
+  text-align: start;
+}
+
+.hid {
+  display: none;
+}
+
+table td {
+  padding: 12px;
+}
+
+table tr {
+  border-bottom: 1px solid gray;
+}
+
+table tr:last-child {
+  padding: 12px;
+  border-bottom: none;
+}
+
+button#delete {
+  cursor: pointer;
+  background-color: #ff5b5b;
+  padding: 10px 12px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: 0.3s ease;
+}
+
+.del-pop {
+  position: absolute;
+  background-color: #00000055;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .3s ease;
+}
+
+.hidden-pop {
+    display: none;
+}
+
+.message-container {
+  background: white;
+  width: max-content;
+  height: max-content;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.message-container div {
+  align-self: flex-end;
+  display: flex;
+  gap: 8px;
+}
+
+.message-container div button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+}
+
+button.yes {
+    background-color: #ff2e2e;
+    color: white;
+}
+
+button.no {
+    background-color: #DDDDDD;
+}
+
+button#delete:hover {
+  background-color: #ff2e2e;
 }

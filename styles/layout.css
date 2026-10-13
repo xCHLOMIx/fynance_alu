@@ -78,13 +78,13 @@ nav {
   display: flex;
   justify-content: space-between;
   padding: 12px;
-  width: 300px;
 }
 
 nav div {
   list-style: none;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 nav li {
@@ -134,6 +134,7 @@ nav li img {
 
   nav {
     flex-direction: column;
+    width: 300px;
   }
 
   nav div {

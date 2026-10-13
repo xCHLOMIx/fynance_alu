@@ -17,12 +17,14 @@ const formHandle = () => {
     const amount = document.getElementById("amount");
     const description = document.getElementById("description");
     const category = document.getElementById("category");
+    const date = new Date();
 
     const transaction = {
         id: transactions == null ? 1 : transactions[transactions.length - 1].id + 1,
         amount: parseInt(amount.value),
         description: description.value,
         category: category.value,
+        createdAt: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
     };
 
     if (transactions == null) {
@@ -51,6 +53,7 @@ const showData = (data) => {
             <td>${data.amount}</td>
             <td>${data.description}</td>
             <td>${data.category}</td>
+            <td>${data.createdAt}</td>
             <td>
                 <div class="del-pop hidden-pop" id="${data.id}">
                     <div class="message-container">
@@ -61,6 +64,40 @@ const showData = (data) => {
                         </div>
                     </div>
                 </div>
+                <div id="${data.id}-container" class="hidden form-container">
+                    <div class="head">
+                        <h2>Edit transaction</h2>
+                        <button id="form_close" onclick="closeEditForm(${data.id})">
+                            <img src="../assets/icons/black_plus.png" alt="">
+                        </button>
+                    </div>
+                    <form id="${data.id}-form">
+                        <div class="field">
+                            <label for="amount">Amount ($):</label>
+                            <input type="number" value=${parseInt(data.amount)} id="${data.id}-amount" title="Must be numbers" placeholder="Example: 500"required>
+                        </div>
+                        <div class="field">
+                            <label for="description">Description:</label>
+                            <input type="text" value="${data.description}" minlength="5" id="${data.id}-description" placeholder="Example: Lunch at KFC" required>
+                        </div>
+                        <div class="selects" id="select_container">
+                            <div class="field">
+                                <label for="category">Category:</label>
+                                <select name="category" value="${data.category}" id="${data.id}-category" required>
+                                    <option value="">Select category</option>
+                                    <option value="food">Food</option>
+                                    <option value="books">Books</option>
+                                    <option value="transport">Transport</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="fees">Fees</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" onClick="editTransaction(${data.id})" class="primary">Submit</button>
+                    </form>
+                </div>
+                <button id="edit" onclick="openEditForm(${data.id})">Edit</button>
                 <button id="delete" onclick="openDelPopUp(${data.id})">Delete</button>
             </td>
         </tr>
@@ -96,12 +133,42 @@ const deleteTransaction = (id) => {
 
 const openDelPopUp = (id) => {
     const popUp = document.getElementById(id);
-
     popUp.classList.remove("hidden-pop");
 }
 
 const closeDelPopUp = (id) => {
     const popUp = document.getElementById(id);
-
     popUp.classList.add("hidden-pop");
+}
+
+const openEditForm = (id) => {
+    const form = document.getElementById(`${id}-container`);
+
+    form.classList.remove("hidden");
+}
+
+const closeEditForm = (id) => {
+    const form = document.getElementById(`${id}-container`);
+    form.classList.add("hidden");
+}
+
+const editTransaction = (id) => {
+    document.getElementById(`${id}-form`).addEventListener("submit", (event) => {
+        event.preventDefault();
+        const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+        const amount = document.getElementById(`${id}-amount`);
+        const description = document.getElementById(`${id}-description`);
+        const category = document.getElementById(`${id}-category`);
+        let transaction = transactions.find((item) => item.id == id);
+        transaction.amount = parseInt(amount.value);
+        transaction.description = description.value;
+        transaction.category = category.value;
+    
+        const newTransactions = transactions.filter((item) => item.id != id);
+        newTransactions.push(transaction);
+        showData(newTransactions);
+        closeEditForm(id);
+        console.log(transactions)
+        localStorage.setItem("transactions", JSON.stringify(newTransactions.sort((a, b) => a.id - b.id)));
+    })
 }

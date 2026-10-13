@@ -39,7 +39,7 @@ button.primary span {
   display: none;
 }
 
-div#form-container {
+div.form-container {
   background: white;
   position: absolute;
   right: 0;
@@ -67,7 +67,7 @@ form {
   gap: 14px;
 }
 
-#form-container img {
+.form-container img {
   width: 24px;
   height: 24px;
   transform: rotate(45deg);
@@ -149,14 +149,21 @@ table tr:last-child {
   border-bottom: none;
 }
 
-button#delete {
+table button {
   cursor: pointer;
-  background-color: #ff5b5b;
   padding: 10px 12px;
   color: white;
   border: none;
   border-radius: 8px;
   transition: 0.3s ease;
+}
+
+button#delete {
+  background-color: #790d16;
+}
+
+button#edit {
+  background-color: #359FA0;
 }
 
 .del-pop {
@@ -169,11 +176,11 @@ button#delete {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: .3s ease;
+  transition: 0.3s ease;
 }
 
 .hidden-pop {
-    display: none;
+  display: none;
 }
 
 .message-container {
@@ -194,20 +201,20 @@ button#delete {
 }
 
 .message-container div button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 8px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
 }
 
 button.yes {
-    background-color: #ff2e2e;
-    color: white;
+  background-color: #790d16;
+  color: white;
 }
 
 button.no {
-    background-color: #DDDDDD;
+  background-color: #dddddd;
 }
 
 button#delete:hover {
-  background-color: #ff2e2e;
+  background-color: #790d16;
 }

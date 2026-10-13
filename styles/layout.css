@@ -1,0 +1,150 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Inter;
+}
+
+header h1 {
+  font-family: Instrument Serif;
+  font-style: italic;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+header {
+  background-color: #747354;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+}
+
+header button div {
+  background-color: #aeac78;
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+}
+
+header button img {
+  width: 100%;
+  height: 100%;
+}
+
+header button {
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid white;
+  color: white;
+  background: transparent;
+  border-radius: 12px;
+  width: max-content;
+  font-size: 1em;
+  padding: 8px 10px 8px 8px;
+  transition: background 0.3s ease;
+}
+
+header button:hover {
+  background: white;
+  color: #4c4541;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+main section {
+  flex: 1;
+  background: #fcf0da;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  width: 300px;
+}
+
+nav div {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  width: 100%;
+}
+
+nav li span {
+  display: none;
+}
+
+li.active {
+  background: #fcf0da;
+}
+
+li.active span {
+  display: flex;
+}
+
+nav li img {
+  width: 24px;
+  height: 24px;
+}
+
+#settings-2 {
+  display: none;
+}
+
+@media screen and (width >= 768px) {
+  nav li span {
+    display: block;
+  }
+
+  nav li {
+    padding: 16px;
+  }
+}
+
+@media screen and (width >= 1024px) {
+  main {
+    flex-direction: row;
+  }
+
+  nav {
+    flex-direction: column;
+  }
+
+  nav div {
+    flex-direction: column;
+  }
+
+  #settings-2 {
+    display: flex;
+  }
+
+  #settings-1 {
+    display: none;
+  }
+}

@@ -101,25 +101,44 @@
                     <button type="submit" class="primary">Submit</button>
                 </form>
             </div>
-            <table>
-                <thead>
+            <div class="container">
+                <div class="options">
+                    <div class="search">
+                        <label for="search">Search Transactions:</label>
+                        <input type="text" name="search" id="search" placeholder="Example: Pizza">
+                    </div>
+                    <div>
+                        <div class="field">
+                            <label for="sorting">Sort by:</label>
+                            <select name="sorting" id="sorting">
+                                <option value="description-a">Description (A-Z)</option>
+                                <option value="description-d">Description (Z-A)</option>
+                                <option value="amount-a">Amount &UpArrow;</option>
+                                <option value="amount-d">Amount &DownArrow;</option>
+                                <option value="createdAt-a">Created at (Newest to Oldest)</option>
+                                <option value="createdAt-d">Create at (Oldest to Newest)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <table>
                     <thead>
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Category</th>
+                                <th>Created at</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    <tbody id="table">
                         <tr>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Category</th>
-                            <th>Created at</th>
-                            <th>Action</th>
+                            <td colspan="4" style="text-align: center; color: grey;">No transactions</td>
                         </tr>
-                    </thead>
-                <tbody id="table">
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: grey;">No transactions</td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- Check for deleting -->
-            
+                    </tbody>
+                </table>
+            </div>
         </section>
     </main>
     <script src="../scripts/transactions.js"></script>

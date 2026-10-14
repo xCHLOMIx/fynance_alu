@@ -115,6 +115,28 @@ select {
   border: 1px solid black;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.search {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search input {
+  width: max-content;
+  max-width: 320px;
+  border: 1px solid grey;
+  background: white;
+  outline: none;
+  border-radius: 8px;
+  padding: 14px;
+}
+
 #form button {
   width: 100%;
   justify-content: center;

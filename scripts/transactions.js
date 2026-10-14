@@ -24,7 +24,7 @@ const formHandle = () => {
         amount: parseInt(amount.value),
         description: description.value,
         category: category.value,
-        createdAt: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}-${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+        createdAt: `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth()).padStart(2, "0")}-${String(date.getFullYear()).padStart(2, "0")}-${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`
     };
 
     if (transactions == null) {
@@ -50,8 +50,8 @@ const showData = (data) => {
     const tableBody = document.getElementById("table");
     const htmlCode = data.map((data) => `
         <tr>
-            <td>${data.amount}</td>
             <td>${data.description}</td>
+            <td>${data.amount}</td>
             <td>${data.category}</td>
             <td>${data.createdAt}</td>
             <td>
@@ -159,16 +159,60 @@ const editTransaction = (id) => {
         const amount = document.getElementById(`${id}-amount`);
         const description = document.getElementById(`${id}-description`);
         const category = document.getElementById(`${id}-category`);
+        const date = new Date();
         let transaction = transactions.find((item) => item.id == id);
         transaction.amount = parseInt(amount.value);
         transaction.description = description.value;
         transaction.category = category.value;
-    
+        transaction.updatedAt = `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth()).padStart(2, "0")}-${String(date.getFullYear()).padStart(2, "0")}-${String(date.getHours()).padStart(2, "0")}-${String(date.getMinutes()).padStart(2, "0")}-${String(date.getSeconds())}`;
+
         const newTransactions = transactions.filter((item) => item.id != id);
         newTransactions.push(transaction);
-        showData(newTransactions);
+        showData(newTransactions.sort((a, b) => a.id - b.id));
         closeEditForm(id);
         console.log(transactions)
         localStorage.setItem("transactions", JSON.stringify(newTransactions.sort((a, b) => a.id - b.id)));
     })
 }
+
+// Live Searching ??
+
+const searchInput = document.getElementById("search");
+searchInput.addEventListener("input", (event) => {
+    const re = new RegExp(event.target.value, "i");
+    console.log(re);
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+    const newTransactions = transactions.filter((item) => (item.description).match(re));
+
+    showData(newTransactions);
+    console.log(event.target.value);
+});
+
+// Sorting functionality
+const sortingSelect = document.getElementById("sorting");
+sortingSelect.addEventListener("change", (event) => {
+    const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+    let newTransactions;
+
+    switch (event.target.value) {
+        case 'amount-a':
+            newTransactions = transactions.sort((a, b) => a.amount - b.amount);
+            break;
+        case 'amount-d':
+            newTransactions = transactions.sort((a, b) => b.amount - a.amount);
+            break;
+        case 'createdAt-a':
+            newTransactions = transactions.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
+            break;
+        case 'createdAt-d':
+            newTransactions = transactions.sort((a, b) => (a.createdAt > b.createdAt ? 0 : -1));
+            break;
+        case 'description-d':
+            newTransactions = transactions.sort((a, b) => (a.description.toUpperCase() > b.description.toUpperCase() ? -1 : 0));
+            break;
+        case 'description-a':
+            newTransactions = transactions.sort((a, b) => (a.description.toUpperCase() > b.description.toUpperCase() ? 0 : -1))
+    }
+
+    showData(newTransactions);
+})

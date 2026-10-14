@@ -46,12 +46,12 @@ form.addEventListener("submit", (event) => {
     formHandle();
 });
 
-const showData = (data) => {
+const showData = (data, mark) => {
     const tableBody = document.getElementById("table");
     const htmlCode = data.map((data) => `
         <tr>
-            <td>${data.description}</td>
-            <td>${data.amount}</td>
+            <td>${(mark && mark.includes(data) ? "<mark>" + data.description + "</mark>" : data.description)}</td>
+            <td>$ ${data.amount}</td>
             <td>${data.category}</td>
             <td>${data.createdAt}</td>
             <td>
@@ -170,7 +170,6 @@ const editTransaction = (id) => {
         newTransactions.push(transaction);
         showData(newTransactions.sort((a, b) => a.id - b.id));
         closeEditForm(id);
-        console.log(transactions)
         localStorage.setItem("transactions", JSON.stringify(newTransactions.sort((a, b) => a.id - b.id)));
     })
 }
@@ -178,14 +177,17 @@ const editTransaction = (id) => {
 // Live Searching ??
 
 const searchInput = document.getElementById("search");
-searchInput.addEventListener("input", (event) => {
-    const re = new RegExp(event.target.value, "i");
-    console.log(re);
-    const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
-    const newTransactions = transactions.filter((item) => (item.description).match(re));
 
-    showData(newTransactions);
-    console.log(event.target.value);
+searchInput.addEventListener("input", (event) => {
+    try {
+        const re = new RegExp(event.target.value, "i");
+        const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+        const newTransactions = event.target.value ? transactions.filter((item) => (item.description).match(re)) : null;
+
+        showData(transactions, newTransactions);
+    } catch (err) {
+        console.log(err.message)
+    }
 });
 
 // Sorting functionality

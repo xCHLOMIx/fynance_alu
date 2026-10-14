@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/layout.css">
-    <link rel="stylesheet" href="../styles/budgets.css">
+    <link rel="stylesheet" href="../styles/transactions.css">
     <title>Fynance - Transactions</title>
 </head>
 
@@ -59,7 +59,87 @@
             </a>
         </nav>
         <section>
-            <h1>Budgets</h1>
+            <div class="head">
+                <h1>Budgets</h1>
+                <button class="primary" id="add_budget">
+                    <img src="../assets/icons/plus.png" alt="Add icon">
+                    <span>New budget</span>
+                </button>
+            </div>
+            <div class="hidden form-container" id="form-container">
+                <div class="head">
+                    <h2>New budget</h2>
+                    <button id="form_close">
+                        <img src="../assets/icons/black_plus.png" alt="Black Add icon">
+                    </button>
+                </div>
+                <form id="form">
+                    <div class="field">
+                        <label for="food">Food budget ($):</label>
+                        <input type="text" name="food" id="food" pattern="\d+" title="Must be numbers"
+                            placeholder="Example: 500">
+                    </div>
+                    <div class="field">
+                        <label for="books">Books</label>
+                        <input type="text" name="books" id="books" pattern="\d+" title="Must be a number"
+                            placeholder="Example: 40">
+                    </div>
+                    <div class="field">
+                        <label for="transport">Transport</label>
+                        <input type="text" name="transport" id="transport" pattern="\d+" title="Must be a number"
+                            placeholder="Example: 5">
+                    </div>
+                    <div class="field">
+                        <label for="entertainment">Entertainment</label>
+                        <input type="text" name="entertainment" id="entertainment" pattern="\d+"
+                            title="Must be a number" placeholder="Example: 3">
+                    </div>
+                    <div class="field">
+                        <label for="fees">Fees</label>
+                        <input type="text" name="entertainment" id="entertainment" pattern="\d+"
+                            title="Must be a number" placeholder="Example: 660">
+                    </div>
+                    <div class="field">
+                        <label for="others">Others</label>
+                        <input type="text" name="others" id="others" pattern="\d+" title="Must be a number"
+                            placeholder="Example: 40">
+                    </div>
+                </form>
+            </div>
+            <div class="container">
+                <div class="options">
+                    <div class="search">
+                        <label for="search">Search Transactions:</label>
+                        <input type="text" name="search" id="search" placeholder="Example: Pizza">
+                    </div>
+                    <div>
+                        <div class="field">
+                            <label for="sorting">Sort by:</label>
+                            <select name="" id="sorting">
+                                <option value="name-a">Name (A-Z)</option>
+                                <option value="name-d">Name (Z-A)</option>
+                                <option value="createdAt-a">Start Date (Newest to Oldest)</option>
+                                <option value="createdAt-d">Start Date (Oldest to Newest)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Food</th>
+                            <th>Books</th>
+                            <th>Transport</th>
+                            <th>Entertainment</th>
+                            <th>Fees</th>
+                            <th>Other</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </section>
     </main>
 </body>

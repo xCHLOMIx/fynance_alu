@@ -77,12 +77,12 @@
                 <form id="form">
                     <div class="field">
                         <label for="amount">Amount ($):</label>
-                        <input type="text" id="amount" pattern="\d+" title="Must be numbers" placeholder="Example: 500"
+                        <input type="text" id="amount" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" title="Must be a numeric value" placeholder="Example: 500"
                             required>
                     </div>
                     <div class="field">
                         <label for="description">Description:</label>
-                        <input type="text" minlength="5" id="description" placeholder="Example: Lunch at KFC" required>
+                        <input type="text" minlength="3" id="description" placeholder="Example: Lunch at KFC" required>
                     </div>
                     <div class="selects" id="select_container">
                         <div class="field">

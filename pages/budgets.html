@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/layout.css">
     <link rel="stylesheet" href="../styles/transactions.css">
-    <title>Fynance - Transactions</title>
+    <title>Fynance - Budgets</title>
 </head>
 
 <body>
@@ -75,42 +75,68 @@
                 </div>
                 <form id="form">
                     <div class="field">
-                        <label for="food">Food budget ($):</label>
-                        <input type="text" name="food" id="food" pattern="\d+" title="Must be numbers"
-                            placeholder="Example: 500">
+                        <label for="name">Budget name:</label>
+                        <input type="text" name="name" id="name" placeholder="June Budget" required>
+                    </div>
+                    <div class="group">
+                        <div class="field">
+                            <label for="start_date">Start date:</label>
+                            <input type="text" pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
+                                title="Date pattern is YYYY-MM-DD" name="start_date" id="start_date"
+                                placeholder="Ex: 2026-08-03" required>
+                        </div>
+                        <div class="field">
+                            <label for="end_date">End date:</label>
+                            <input type="text" name="end_date" id="end_date"
+                                pattern="^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$"
+                                title="Date pattern is YYYY-MM-DD" placeholder="Ex: 2026-09-03" required>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="field">
+                            <label for="food">Food budget ($)</label>
+                            <input type="number" name="food" id="food" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$"
+                                title="Must be a numeric value"
+                                placeholder=" Example: 500" required>
+                        </div>
+                        <div class="field">
+                            <label for="books">Books budget ($)</label>
+                            <input type="number" name="books" id="books" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$"
+                                title="Must be a numeric value" placeholder="Example: 40" required>
+                        </div>
                     </div>
                     <div class="field">
-                        <label for="books">Books</label>
-                        <input type="text" name="books" id="books" pattern="\d+" title="Must be a number"
-                            placeholder="Example: 40">
+                        <label for="transport">Transport budget ($)</label>
+                        <input type="number" name="transport" id="transport" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$"
+                            title="Must be a numeric value" placeholder="Example: 5" required>
                     </div>
                     <div class="field">
-                        <label for="transport">Transport</label>
-                        <input type="text" name="transport" id="transport" pattern="\d+" title="Must be a number"
-                            placeholder="Example: 5">
+                        <label for="entertainment">Entertainment budget ($)</label>
+                        <input type="number" name="entertainment" id="entertainment"
+                            pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" title="Must be a numeric value"
+                            placeholder="Example: 3" required>
                     </div>
-                    <div class="field">
-                        <label for="entertainment">Entertainment</label>
-                        <input type="text" name="entertainment" id="entertainment" pattern="\d+"
-                            title="Must be a number" placeholder="Example: 3">
+                    <div class="group">
+                        <div class="field">
+                            <label for="fees">Fees budget ($)</label>
+                            <input type="number" name="fees" id="fees"
+                                pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" title="Must be a numeric value"
+                                placeholder="Example: 660" required>
+                        </div>
+                        <div class="field">
+                            <label for="others">Others ($)</label>
+                            <input type="number" name="others" id="others" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$"
+                                title="Must be a numeric value" placeholder="Example: 40" required>
+                        </div>
                     </div>
-                    <div class="field">
-                        <label for="fees">Fees</label>
-                        <input type="text" name="entertainment" id="entertainment" pattern="\d+"
-                            title="Must be a number" placeholder="Example: 660">
-                    </div>
-                    <div class="field">
-                        <label for="others">Others</label>
-                        <input type="text" name="others" id="others" pattern="\d+" title="Must be a number"
-                            placeholder="Example: 40">
-                    </div>
+                    <button type="submit" class="primary">Submit</button>
                 </form>
             </div>
             <div class="container">
                 <div class="options">
                     <div class="search">
-                        <label for="search">Search Transactions:</label>
-                        <input type="text" name="search" id="search" placeholder="Example: Pizza">
+                        <label for="search">Search Budgets:</label>
+                        <input type="text" name="search" id="search" placeholder="Example: June budget">
                     </div>
                     <div>
                         <div class="field">
@@ -124,24 +150,32 @@
                         </div>
                     </div>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Food</th>
-                            <th>Books</th>
-                            <th>Transport</th>
-                            <th>Entertainment</th>
-                            <th>Fees</th>
-                            <th>Other</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Food</th>
+                                <th>Books</th>
+                                <th>Transport</th>
+                                <th>Entertainment</th>
+                                <th>Fees</th>
+                                <th>Other</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table">
+                            <tr>
+                                <td colspan="9" style="text-align: center; color: grey;">No budgets</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
     </main>
+    <script src="../scripts/budgets.js"></script>
 </body>
 
 </html>

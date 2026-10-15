@@ -58,10 +58,17 @@ div.form-container {
   width: 100%;
   max-width: 400px;
   border-left: 1px solid #cccccc;
+  overflow-y: auto;
 }
 
 .hidden {
   transform: translateX(400px);
+}
+
+.group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
 
 #form .head {
@@ -153,11 +160,13 @@ select {
 table {
   background-color: white;
   width: 100%;
+  border-collapse: collapse;
 }
 
 table th {
   padding: 12px;
   text-align: start;
+  border-bottom: 1px solid hsl(0, 0%, 80%);
 }
 
 .hid {

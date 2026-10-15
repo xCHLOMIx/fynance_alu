@@ -13,31 +13,32 @@ form_close.addEventListener("click", () => {
 });
 
 const formHandle = () => {
-    let transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+    let data = JSON.parse(localStorage.getItem("data")) || null;
     const amount = document.getElementById("amount");
     const description = document.getElementById("description");
     const category = document.getElementById("category");
     const date = new Date();
 
     const transaction = {
-        id: transactions == null ? 1 : transactions[transactions.length - 1].id + 1,
-        amount: parseInt(amount.value),
+        id: data == null  || data.transactions == null ? 1 : data.transactions[data.transactions.length - 1].id + 1,
+        amount: parseFloat(amount.value),
         description: description.value,
         category: category.value,
         createdAt: `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth()).padStart(2, "0")}-${String(date.getFullYear()).padStart(2, "0")}-${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`
     };
 
-    if (transactions == null) {
-        transactions = [transaction];
-        localStorage.setItem("transactions", JSON.stringify([transaction]));
+    if (data == null  || data.transactions == null) {
+        data = { ...data, transactions: [transaction]};
+        localStorage.setItem("data", JSON.stringify(data));
     } else {
-        transactions = [...transactions, transaction];
-        localStorage.setItem("transactions", JSON.stringify(transactions));
+        data.transactions = [...data.transactions, transaction];
+        localStorage.setItem("data", JSON.stringify(data));
     }
     amount.value = "";
     description.value = "";
     category.value = "";
-    if (transactions != null) showData(transactions);
+    const newData = JSON.parse(localStorage.getItem("data")) || null;
+    if (newData.transactions != null) showData(newData.transactions);
     form_container.classList.add("hidden");
 }
 
@@ -74,7 +75,7 @@ const showData = (data, mark) => {
                     <form id="${data.id}-form">
                         <div class="field">
                             <label for="amount">Amount ($):</label>
-                            <input type="number" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value=${parseInt(data.amount)} id="${data.id}-amount" title="Must be a numeric value" placeholder="Example: 500"required>
+                            <input type="number" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value=${parseFloat(data.amount)} id="${data.id}-amount" title="Must be a numeric value" placeholder="Example: 500"required>
                         </div>
                         <div class="field">
                             <label for="description">Description:</label>
@@ -106,8 +107,8 @@ const showData = (data, mark) => {
     tableBody.innerHTML = htmlCode;
 };
 
-const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
-if (transactions) showData(transactions);
+const data = JSON.parse(localStorage.getItem("data")) || null;
+if (data && data.transactions) showData(data.transactions);
 
 const select = document.getElementById("category");
 // select.addEventListener("change", (event) => {
@@ -161,7 +162,7 @@ const editTransaction = (id) => {
         const category = document.getElementById(`${id}-category`);
         const date = new Date();
         let transaction = transactions.find((item) => item.id == id);
-        transaction.amount = parseInt(amount.value);
+        transaction.amount = parseFloat(amount.value);
         transaction.description = description.value;
         transaction.category = category.value;
         transaction.updatedAt = `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth()).padStart(2, "0")}-${String(date.getFullYear()).padStart(2, "0")}-${String(date.getHours()).padStart(2, "0")}-${String(date.getMinutes()).padStart(2, "0")}-${String(date.getSeconds())}`;

@@ -39,6 +39,14 @@ button.primary span {
   display: none;
 }
 
+.table-container {
+  width: 100%;
+  background: white;
+  overflow-x: auto;
+  border: 1px solid hsl(0, 0%, 80%);
+  border-radius: 12px;
+}
+
 div.form-container {
   background: white;
   position: absolute;
@@ -145,8 +153,6 @@ select {
 table {
   background-color: white;
   width: 100%;
-  border: 1px solid hsl(0, 0%, 80%);
-  border-radius: 12px;
 }
 
 table th {

@@ -121,23 +121,25 @@
                         </div>
                     </div>
                 </div>
-                <table>
-                    <thead>
+                <div class="table-container">
+                    <table>
                         <thead>
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Amount</th>
+                                    <th>Category</th>
+                                    <th>Created at</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                        <tbody id="table">
                             <tr>
-                                <th>Description</th>
-                                <th>Amount</th>
-                                <th>Category</th>
-                                <th>Created at</th>
-                                <th>Action</th>
+                                <td colspan="4" style="text-align: center; color: grey;">No transactions</td>
                             </tr>
-                        </thead>
-                    <tbody id="table">
-                        <tr>
-                            <td colspan="4" style="text-align: center; color: grey;">No transactions</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </section>
     </main>

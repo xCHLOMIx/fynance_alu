@@ -74,7 +74,7 @@ const showData = (data, mark) => {
                     <form id="${data.id}-form">
                         <div class="field">
                             <label for="amount">Amount ($):</label>
-                            <input type="number" value=${parseInt(data.amount)} id="${data.id}-amount" title="Must be numbers" placeholder="Example: 500"required>
+                            <input type="number" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value=${parseInt(data.amount)} id="${data.id}-amount" title="Must be a numeric value" placeholder="Example: 500"required>
                         </div>
                         <div class="field">
                             <label for="description">Description:</label>

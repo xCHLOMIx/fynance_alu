@@ -1,6 +1,88 @@
 section {
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.setting {
+  background: white;
+  padding: 14px;
+  border: 1px solid #cccccc;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting p {
+  color: grey;
+}
+
+.switch {
+    max-width: 400px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: start;
+  background: #cccccc;
+  height: 48px;
+  padding: 0px 10px;
+}
+
+.switch .option {
+  width: 33.3333%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.switch .bg {
+  position: absolute;
+  top: 15%;
+  left: 2%;
+  background-color: yellow;
+  height: 70%;
+  width: 33.333333%;
+  transition: transform 0.3s ease-out;
+}
+
+.left {
+  transform: translateX(0%);
+}
+
+.center {
+  transform: translateX(99.999999%);
+}
+
+.right {
+  transform: translateX(186%);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: flex-start;
+}
+
+.switch button {
+  cursor: pointer;
+  height: 100%;
+  position: relative;
+  border: none;
+  background-color: transparent;
+}
+
+@media screen and (width >= 768px) {
+    .setting {
+        flex-direction: row;
+    }
 }

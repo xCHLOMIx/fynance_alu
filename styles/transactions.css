@@ -1,11 +1,11 @@
 section {
-  padding: 32px 32px 104px 32px;
+  padding: 32px;
   position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 
 section .head {
@@ -46,6 +46,11 @@ button.primary span {
   overflow-x: auto;
   border: 1px solid hsl(0, 0%, 80%);
   border-radius: 12px;
+}
+
+.head .buttons {
+  display: flex;
+  gap: 12px;
 }
 
 div.form-container {

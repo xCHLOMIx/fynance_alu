@@ -252,7 +252,77 @@ sortingSelect.addEventListener("change", (event) => {
             newBudgets = budgets.sort((a, b) => (a.name.start_date > b.name.toUpperCase() ? 0 : -1));
             break;
 
-        }
+    }
 
     showData(newBudgets);
 })
+
+// Import Budget data
+const importButton = document.getElementById("import");
+let fileHandle;
+importButton.addEventListener("click", async () => {
+    [fileHandle] = await window.showOpenFilePicker({
+        types: [
+            {
+                description: "JSON",
+                accept: {
+                    "json/*": [".json"]
+                }
+            }
+        ]
+    });
+    const file = await fileHandle.getFile();
+    const fileText = await file.text();
+    const json = JSON.parse(fileText).budgets;
+
+    function verifyJSON(json) {
+        const re = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+        for (i = 0; i < json.length; i++) {
+            if (
+                Object.keys(json[i]).includes("id")
+                && Object.keys(json[i]).includes("name")
+                && Object.keys(json[i]).includes("start_date")
+                && Object.keys(json[i]).includes("end_date")
+                && Object.keys(json[i]).includes("food")
+                && Object.keys(json[i]).includes("books")
+                && Object.keys(json[i]).includes("transport")
+                && Object.keys(json[i]).includes("entertainment")
+                && Object.keys(json[i]).includes("fees")
+                && Object.keys(json[i]).includes("others")
+                && Object.keys(json[i]).includes("createdAt")
+                && typeof (json[i].id) == "number"
+                && typeof (json[i].name) == "string"
+                && typeof (json[i].start_date) == "string"
+                && typeof (json[i].end_date) == "string"
+                && re.test(json[i].start_date)
+                && re.test(json[i].end_date)
+                && typeof (json[i].food) == "number"
+                && typeof (json[i].books) == "number"
+                && typeof (json[i].transport) == "number"
+                && typeof (json[i].entertainment) == "number"
+                && typeof (json[i].fees) == "number"
+                && typeof (json[i].others) == "number"
+                && typeof (json[i].createdAt) == "string"
+            ) {
+                continue;
+            } else {
+                console.log("Failed");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (verifyJSON(json)) {
+        let data = JSON.parse(localStorage.getItem("data")) || null;
+
+        if (data == null || data.budgets == null) {
+            data = { ...data, budgets: json };
+        } else {
+            data.transactions = [...data.budgets, json];
+        }
+
+        localStorage.setItem("data", JSON.stringify(data));
+        showData(data.budgets);
+    }
+});

@@ -16,8 +16,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  /* overflow: hidden; */
   width: 100vw;
+  overflow: hidden;
 }
 
 .selects {
@@ -72,6 +72,7 @@ header button:hover {
 }
 
 main {
+  height: 100%;
   flex: 1;
   display: flex;
   flex-direction: column-reverse;
@@ -79,6 +80,8 @@ main {
 
 main section {
   flex: 1;
+  max-height: 81.6vh;
+  overflow-y: auto;
   background: #fcf0da;
 }
 
@@ -86,11 +89,7 @@ nav {
   display: flex;
   justify-content: space-between;
   padding: 12px;
-  position: fixed;
-  z-index: 10;
   background: white;
-  width: 100%;
-  bottom: 0px;
 }
 
 nav div {
@@ -139,17 +138,22 @@ nav li img {
     padding: 16px;
   }
 
-  nav {
-    position: static;
+  main section {
+    max-height: 81.1vh;
   }
 }
 
 @media screen and (width >= 1024px) {
+  main section {
+    max-height: 90.8vh;
+  }
+
   nav {
     position: static;
   }
-  
+
   main {
+    flex: 1;
     flex-direction: row;
   }
 

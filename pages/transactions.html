@@ -61,10 +61,16 @@
         <section>
             <div class="head">
                 <h1>Transactions</h1>
-                <button class="primary" id="add_transaction">
-                    <img src="../assets/icons/plus.png" alt="Add icon">
-                    <span>New transaction</span>
-                </button>
+                <div class="buttons">
+                    <button class="primary" id="add_transaction">
+                        <img src="../assets/icons/plus.png" alt="Add icon">
+                        <span>New transaction</span>
+                    </button>
+                    <button class="primary" id="import">
+                        <img src="../assets/icons/import.png" alt="Import icon">
+                        <span>Import</span>
+                    </button>
+                </div>
             </div>
             <!-- The side form - a pain to implement btw :(  -->
             <div id="form-container" class="hidden form-container">
@@ -77,7 +83,7 @@
                 <form id="form">
                     <div class="field">
                         <label for="amount">Amount ($):</label>
-                        <input type="text" id="amount" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" title="Must be a numeric value" placeholder="Example: 500"
+                        <input type="number" id="amount" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" title="Must be a numeric value" placeholder="Example: 500"
                             required>
                     </div>
                     <div class="field">

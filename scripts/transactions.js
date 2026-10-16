@@ -227,3 +227,59 @@ sortingSelect.addEventListener("change", (event) => {
 
     showData(newTransactions);
 })
+
+// Importing JSON
+
+const importBtn = document.getElementById("import");
+let fileHandle;
+importBtn.addEventListener("click", async () => {
+    [fileHandle] = await window.showOpenFilePicker({
+        types: [
+            {
+                description: "JSON",
+                accept: {
+                    "json/*": [".json"]
+                }
+            }
+        ]
+    });
+    const file = await fileHandle.getFile();
+    const fileText = await file.text();
+    const json = JSON.parse(fileText).transactions;
+
+    function verifyJSON(json) {
+        const re = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
+        for (i = 0; i < json.length; i++) {
+            if (
+                Object.keys(json[i]).includes("id")
+                && Object.keys(json[i]).includes("amount")
+                && Object.keys(json[i]).includes("description")
+                && Object.keys(json[i]).includes("category")
+                && Object.keys(json[i]).includes("createdAt")
+                && typeof(json[i].id) == "number"
+                && typeof(json[i].amount) == "number"
+                && typeof(json[i].description) == "string"
+                && typeof(json[i].category) == "string"
+                && typeof(json[i].createdAt) == "string"
+            ) {
+                continue;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    if (verifyJSON(json)) {
+        let data = JSON.parse(localStorage.getItem("data")) || null;
+
+        if (data == null || data.transactions == null) {
+            data = { ...data, transactions: json };
+        } else {
+            data.transactions = [...data.transactions, json];
+        }
+
+        localStorage.setItem("data", JSON.stringify(data));
+        showData(data.transactions);
+    }
+});

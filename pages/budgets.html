@@ -76,7 +76,7 @@
                 <form id="form">
                     <div class="field">
                         <label for="name">Budget name:</label>
-                        <input type="text" name="name" id="name" placeholder="June Budget" required>
+                        <input type="text" name="name" id="name" placeholder="Ex: June Budget" required>
                     </div>
                     <div class="group">
                         <div class="field">
@@ -97,7 +97,7 @@
                             <label for="food">Food budget ($)</label>
                             <input type="number" name="food" id="food" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$"
                                 title="Must be a numeric value"
-                                placeholder=" Example: 500" required>
+                                placeholder="Example: 500" required>
                         </div>
                         <div class="field">
                             <label for="books">Books budget ($)</label>
@@ -133,7 +133,7 @@
                 </form>
             </div>
             <div class="container">
-                <div class="options">
+                <div class="options" id="options-container">
                     <div class="search">
                         <label for="search">Search Budgets:</label>
                         <input type="text" name="search" id="search" placeholder="Example: June budget">
@@ -144,8 +144,8 @@
                             <select name="" id="sorting">
                                 <option value="name-a">Name (A-Z)</option>
                                 <option value="name-d">Name (Z-A)</option>
-                                <option value="createdAt-a">Start Date (Newest to Oldest)</option>
-                                <option value="createdAt-d">Start Date (Oldest to Newest)</option>
+                                <option value="start_date-a">Start Date (Newest to Oldest)</option>
+                                <option value="start_date-d">Start Date (Oldest to Newest)</option>
                             </select>
                         </div>
                     </div>
@@ -163,11 +163,12 @@
                                 <th>Other</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="table">
                             <tr>
-                                <td colspan="9" style="text-align: center; color: grey;">No budgets</td>
+                                <td colspan="10" style="text-align: center; color: grey;">No budgets</td>
                             </tr>
                         </tbody>
                     </table>

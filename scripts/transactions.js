@@ -20,15 +20,15 @@ const formHandle = () => {
     const date = new Date();
 
     const transaction = {
-        id: data == null  || data.transactions == null ? 1 : data.transactions[data.transactions.length - 1].id + 1,
+        id: data == null || data.transactions == null ? 1 : data.transactions[data.transactions.length - 1].id + 1,
         amount: parseFloat(amount.value),
         description: description.value,
         category: category.value,
         createdAt: `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth()).padStart(2, "0")}-${String(date.getFullYear()).padStart(2, "0")}-${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}:${String(date.getSeconds()).padStart(2, "0")}`
     };
 
-    if (data == null  || data.transactions == null) {
-        data = { ...data, transactions: [transaction]};
+    if (data == null || data.transactions == null) {
+        data = { ...data, transactions: [transaction] };
         localStorage.setItem("data", JSON.stringify(data));
     } else {
         data.transactions = [...data.transactions, transaction];
@@ -69,13 +69,13 @@ const showData = (data, mark) => {
                     <div class="head">
                         <h2>Edit transaction</h2>
                         <button id="form_close" onclick="closeEditForm(${data.id})">
-                            <img src="../assets/icons/black_plus.png" alt="">
+                            <img src="../assets/icons/black_plus.png" alt="Black plus icon">
                         </button>
                     </div>
                     <form id="${data.id}-form">
                         <div class="field">
                             <label for="amount">Amount ($):</label>
-                            <input type="number" pattern="^(0|[1-9]\d*)(\.\d{1,2})?$" value=${parseFloat(data.amount)} id="${data.id}-amount" title="Must be a numeric value" placeholder="Example: 500"required>
+                            <input type="number" pattern="^(0|[1-9]\\d*)(\\.\\d{1,2})?$" value=${parseFloat(data.amount)} id="${data.id}-amount" title="Must be a numeric value" placeholder="Example: 500"required>
                         </div>
                         <div class="field">
                             <label for="description">Description:</label>
@@ -98,8 +98,10 @@ const showData = (data, mark) => {
                         <button type="submit" onClick="editTransaction(${data.id})" class="primary">Submit</button>
                     </form>
                 </div>
-                <button id="edit" onclick="openEditForm(${data.id})">Edit</button>
-                <button id="delete" onclick="openDelPopUp(${data.id})">Delete</button>
+                <div class="buttons">
+                    <button id="edit" onclick="openEditForm(${data.id})">Edit</button>
+                    <button id="delete" onclick="openDelPopUp(${data.id})">Delete</button>
+                </div>
             </td>
         </tr>
     `).join("");
@@ -107,8 +109,13 @@ const showData = (data, mark) => {
     tableBody.innerHTML = htmlCode;
 };
 
+const options = document.getElementById("options-container");
 const data = JSON.parse(localStorage.getItem("data")) || null;
-if (data && data.transactions) showData(data.transactions);
+if (data && data.transactions) {
+    showData(data.transactions);
+} else {
+    options.style += "display: none;";
+};
 
 const select = document.getElementById("category");
 // select.addEventListener("change", (event) => {
@@ -126,10 +133,10 @@ const select = document.getElementById("category");
 // })
 
 const deleteTransaction = (id) => {
-    const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
-    const newTransactions = transactions.filter((transaction) => transaction.id != id);
-    localStorage.setItem("transactions", JSON.stringify(newTransactions));
-    showData(newTransactions);
+    let data = JSON.parse(localStorage.getItem("data")) || null;
+    data.transactions = data.transactions.filter((transaction) => transaction.id != id);
+    localStorage.setItem("data", JSON.stringify(data));
+    showData(data.transactions);
 }
 
 const openDelPopUp = (id) => {
@@ -156,22 +163,23 @@ const closeEditForm = (id) => {
 const editTransaction = (id) => {
     document.getElementById(`${id}-form`).addEventListener("submit", (event) => {
         event.preventDefault();
-        const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+        let data = JSON.parse(localStorage.getItem("data")) || null;
         const amount = document.getElementById(`${id}-amount`);
         const description = document.getElementById(`${id}-description`);
         const category = document.getElementById(`${id}-category`);
         const date = new Date();
-        let transaction = transactions.find((item) => item.id == id);
+        let transaction = data.transactions.find((item) => item.id == id);
         transaction.amount = parseFloat(amount.value);
         transaction.description = description.value;
         transaction.category = category.value;
         transaction.updatedAt = `${String(date.getDate()).padStart(2, "0")}-${String(date.getMonth()).padStart(2, "0")}-${String(date.getFullYear()).padStart(2, "0")}-${String(date.getHours()).padStart(2, "0")}-${String(date.getMinutes()).padStart(2, "0")}-${String(date.getSeconds())}`;
 
-        const newTransactions = transactions.filter((item) => item.id != id);
-        newTransactions.push(transaction);
-        showData(newTransactions.sort((a, b) => a.id - b.id));
+        data = { ...data, transactions: data.transactions.filter((item) => item.id != id) };
+        data.transactions = [...data.transactions, transaction];
+        data.transactions = data.transactions.sort((a, b) => a.id - b.id)
+        showData(data.transactions);
         closeEditForm(id);
-        localStorage.setItem("transactions", JSON.stringify(newTransactions.sort((a, b) => a.id - b.id)));
+        localStorage.setItem("data", JSON.stringify(data));
     })
 }
 
@@ -187,14 +195,14 @@ searchInput.addEventListener("input", (event) => {
 
         showData(transactions, newTransactions);
     } catch (err) {
-        console.log(err.message)
+        console.log("Sorry, there was an error!")
     }
 });
 
 // Sorting functionality
 const sortingSelect = document.getElementById("sorting");
 sortingSelect.addEventListener("change", (event) => {
-    const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
+    const transactions = JSON.parse(localStorage.getItem("data")).transactions || null;
     let newTransactions;
 
     switch (event.target.value) {

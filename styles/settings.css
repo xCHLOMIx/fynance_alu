@@ -27,14 +27,14 @@ section {
 }
 
 .switch {
-    max-width: 400px;
+  max-width: 400px;
   width: 100%;
   position: relative;
   display: flex;
   justify-content: start;
   background: #cccccc;
   height: 48px;
-  padding: 0px 10px;
+  padding: 0;
 }
 
 .switch .option {
@@ -46,10 +46,10 @@ section {
 
 .switch .bg {
   position: absolute;
-  top: 15%;
-  left: 2%;
+  top: 0px;
   background-color: yellow;
-  height: 70%;
+  left: 0px;
+  height: 100%;
   width: 33.333333%;
   transition: transform 0.3s ease-out;
 }
@@ -63,7 +63,7 @@ section {
 }
 
 .right {
-  transform: translateX(186%);
+  transform: translateX(200%);
 }
 
 .text {
@@ -82,7 +82,7 @@ section {
 }
 
 @media screen and (width >= 768px) {
-    .setting {
-        flex-direction: row;
-    }
+  .setting {
+    flex-direction: row;
+  }
 }

@@ -69,6 +69,7 @@ div.form-container {
 
 .hidden {
   transform: translateX(400px);
+  display: none;
 }
 
 .group {

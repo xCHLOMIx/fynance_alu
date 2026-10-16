@@ -58,9 +58,18 @@ section {
 }
 
 .recent-data {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+.data-container {
+    padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    background-color: white;
+    border: 1px solid #CCCCCC;
+    gap: 12px;
 }
 
 .item span.first {
@@ -70,12 +79,6 @@ section {
   color: white;
 }
 
-.data-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 24px;
-}
 
 .text {
     width: 100%;
@@ -99,6 +102,7 @@ section {
 
 .item p {
     color: grey;
+    font-weight: normal;
 }
 
 @media screen and (width >= 768px) {
@@ -122,5 +126,9 @@ section {
 
     .section-cards .card:last-child {
         grid-column: 3/4;
+    }
+
+    .recent-data {
+        grid-template-columns: 1fr 1fr;
     }
 }

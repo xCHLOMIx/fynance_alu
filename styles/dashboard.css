@@ -69,12 +69,17 @@ section {
   background-color: white;
   border: 1px solid #cccccc;
   gap: 12px;
+  min-height: 527px;
+  height: 527px;
 }
 
 .item span.first {
   background: #747354;
   padding: 16px;
   font-weight: bold;
+  width: max-content;
+  min-width: max-content;
+  flex: 1;
   color: white;
 }
 
@@ -86,9 +91,9 @@ section {
 }
 
 .text span {
-  align-self: flex-end;
+  /* align-self: flex-end; */
   width: max-content;
-  background: #ff9c4cdd;
+  background: #ff9c4c99;
   text-transform: capitalize;
   font-weight: 500;
   border-radius: 4px;
@@ -104,6 +109,28 @@ section {
 .item p {
   color: grey;
   font-weight: normal;
+}
+
+.bars {
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: end;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.bar {
+  height: 100%;
+  width: 4%;
+  background-color: #747354;
+  border-radius: 20px;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-around;
 }
 
 @media screen and (width >= 768px) {

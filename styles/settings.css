@@ -31,7 +31,8 @@ section {
   position: relative;
   display: flex;
   justify-content: start;
-  background: #cccccc;
+  background: white;
+  border: 1px solid #CCCCCC;
   height: 48px;
   padding: 0;
 }
@@ -46,7 +47,7 @@ section {
 .switch .bg {
   position: absolute;
   top: 0px;
-  background-color: yellow;
+  background-color: hsl(39, 85%, 82%);
   left: 0px;
   height: 100%;
   width: 33.333333%;

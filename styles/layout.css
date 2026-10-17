@@ -81,7 +81,7 @@ main {
 main section {
   flex: 1;
   padding: 18px;
-  max-height: 81.6vh;
+  max-height: 76.3vh;
   overflow-y: auto;
   background: #fcf0da;
 }

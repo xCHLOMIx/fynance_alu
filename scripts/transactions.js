@@ -296,6 +296,6 @@ importBtn.addEventListener("click", async () => {
         }
 
         localStorage.setItem("data", JSON.stringify(data));
-        showData(data.transactions);
+        showData(data.transactions, "", data.currency || "$");
     }
 });

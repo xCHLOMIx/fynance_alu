@@ -55,7 +55,7 @@ const formHandle = () => {
     fees.value = "";
     others.value = "";
     const newData = JSON.parse(localStorage.getItem("data")) || null;
-    if (newData.budgets != null) showData(newData.budgets);
+    if (newData.budgets != null) showData(newData.budgets, "", data.currency || "$");
     form_container.classList.add("hidden");
 }
 
@@ -64,12 +64,12 @@ form.addEventListener("submit", (event) => {
     formHandle();
 })
 
-const showData = (data, mark) => {
+const showData = (data, mark, currency) => {
     const tableBody = document.getElementById('table');
     const htmlCode = data.map((data) => `
         <tr>
             <td>${(mark && mark.includes(data) ? "<mark>" + data.name + "</mark>" : data.name)}</td>
-            <td>${data.food}</td>
+            <td>${currency} ${data.food}</td>
             <td>${data.books}</td>
             <td>${data.transport}</td>
             <td>${data.entertainment}</td>
@@ -152,13 +152,13 @@ const showData = (data, mark) => {
 }
 
 const data = JSON.parse(localStorage.getItem("data")) || null;
-if (data != null && data.budgets) showData(data.budgets);
+if (data != null && data.budgets) showData(data.budgets, "", data.currency || "$");
 
 const deleteBudget = (id) => {
     let data = JSON.parse(localStorage.getItem("data")) || null;
     data.budgets = data.budgets.filter((budget) => budget.id != id);
     localStorage.setItem("data", JSON.stringify(data));
-    showData(data.budgets);
+    showData(data.budgets, "", data.currency || "$");
 }
 
 const openDelPopUp = (id) => {
@@ -213,7 +213,7 @@ const editBudget = (id) => {
         data = { ...data, budgets: data.budgets.filter((item) => item.id != id) };
         data.budgets = [...data.budgets, budget];
         data.budgets = data.budgets.sort((a, b) => a.id - b.id);
-        showData(data.budgets);
+        showData(data.budgets, "", data.currency || $);
         closeEditForm(id)
         localStorage.setItem("data", JSON.stringify(data));
     });
@@ -224,12 +224,13 @@ const searchInput = document.getElementById("search");
 searchInput.addEventListener("input", (event) => {
     try {
         const re = new RegExp(event.target.value, "i");
-        const budgets = JSON.parse(localStorage.getItem("data")).budgets || null;
-        const newBudgets = event.target.value ? budgets.filter((item) => (item.name).match(re)) : null;
+        const data = JSON.parse(localStorage.getItem("data")) || null;
+        const newBudgets = event.target.value ? data.budgets.filter((item) => (item.name).match(re)) : null;
 
-        showData(budgets, newBudgets);
-    } catch {
+        showData(data.budgets, newBudgets, data.currency || "$");
+    } catch (err) {
         console.log("Sorry, there was an error!")
+        console.log(err.message);
     }
 })
 

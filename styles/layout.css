@@ -80,6 +80,7 @@ main {
 
 main section {
   flex: 1;
+  padding: 18px;
   max-height: 81.6vh;
   overflow-y: auto;
   background: #fcf0da;
@@ -134,6 +135,10 @@ nav li img {
     display: block;
   }
 
+  main section {
+    padding: 24px;
+  }
+
   nav li {
     padding: 16px;
   }
@@ -146,6 +151,7 @@ nav li img {
 @media screen and (width >= 1024px) {
   main section {
     max-height: 90.8vh;
+    padding: 32px;
   }
 
   nav {

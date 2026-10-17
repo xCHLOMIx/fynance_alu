@@ -1,10 +1,10 @@
 const transactions_amount = document.getElementById("transactions-amount");
 const transactions_number = document.getElementById("transactions-number");
-const budgets_number = document.getElementById("budgets-number");
+const topCategoryEl = document.getElementById("top-category");
 const transactionList = document.getElementById("transactions");
 const budgetList = document.getElementById("budgets")
 
-const updateTransactions = (data, currency = "$") => {
+const updateTransactionsData = (data) => {
     let totalTransactionsAmount = 0;
 
     if (data == null || data.transactions == null) {
@@ -15,16 +15,43 @@ const updateTransactions = (data, currency = "$") => {
             totalTransactionsAmount += data.transactions[i].amount;
         }
 
-        transactions_amount.textContent = currency + totalTransactionsAmount;
-        transactions_number.textContent = data.transactions.length;
-    }
-}
+        function rankTransactionCategories(transactions) {
+            let score = []
+            for (i = 0; i < transactions.length; i++) {
+                let categoryRank = {
+                    category: transactions[i].category,
+                    count: 0
+                }
 
-const updateBudgets = (data) => {
-    if (data == null || data.budgets == null) {
-        budgets_number.textContent = 0;
-    } else {
-        budgets_number.textContent = String(data.budgets.length).padStart(2, 0);
+                for (j = 0; j < transactions.length; j++) {
+                    if (transactions[j].category == categoryRank.category) {
+                        categoryRank.count += 1;
+                    }
+                }
+
+                score.push(categoryRank);
+            }
+
+            return score;
+        }
+
+        const topCategory = rankTransactionCategories(data.transactions)[0];
+        let rate = 1;
+
+        switch (data.currency) {
+            case "$":
+                rate = 1;
+                break;
+            case "RWF":
+                rate = 1478.18;
+                break;
+            case "KSH":
+                rate = 130.10
+        }
+
+        topCategoryEl.innerText = topCategory.category;
+        transactions_amount.textContent = data.currency + " " + (totalTransactionsAmount * rate).toLocaleString();
+        transactions_number.textContent = data.transactions.length;
     }
 }
 
@@ -67,7 +94,7 @@ const updateBudgetList = (data, currency) => {
             index < 5
         );
 
-        
+
         const htmlCode = topBudgets.map((item) => {
             const total = item.food + item.books + item.transport + item.entertainment + item.fees + item.others;
             return `<div class="item">
@@ -84,7 +111,6 @@ const updateBudgetList = (data, currency) => {
     }
 }
 const data = JSON.parse(localStorage.getItem("data")) || null;
-updateBudgets(data);
-updateTransactions(data);
+updateTransactionsData(data);
 updateTransactionList(data);
 updateBudgetList(data);

@@ -38,7 +38,7 @@ const formHandle = () => {
     description.value = "";
     category.value = "";
     const newData = JSON.parse(localStorage.getItem("data")) || null;
-    if (newData.transactions != null) showData(newData.transactions);
+    if (newData.transactions != null) showData(newData.transactions, "", data.currency || "$");
     form_container.classList.add("hidden");
 }
 
@@ -47,13 +47,27 @@ form.addEventListener("submit", (event) => {
     formHandle();
 });
 
-const showData = (data, mark) => {
+const showData = (data, mark, currency) => {
+    let rate = 1;
+
+    switch (currency) {
+        case "$":
+            rate = 1;
+            break;
+        case "RWF":
+            rate = 1478.18
+            break;
+        case "KSH":
+            rate = 130.10
+    }
+
+    data.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
     const tableBody = document.getElementById("table");
     const htmlCode = data.map((data) => `
         <tr>
             <td>${(mark && mark.includes(data) ? "<mark>" + data.description + "</mark>" : data.description)}</td>
-            <td>$ ${data.amount}</td>
-            <td>${data.category}</td>
+            <td>${currency} ${(data.amount * rate).toLocaleString()}</td>
+            <td style="text-transform: capitalize;">${data.category}</td>
             <td>${data.createdAt}</td>
             <td>
                 <div class="del-pop hidden-pop" id="${data.id}">
@@ -111,8 +125,9 @@ const showData = (data, mark) => {
 
 const options = document.getElementById("options-container");
 const data = JSON.parse(localStorage.getItem("data")) || null;
+
 if (data && data.transactions) {
-    showData(data.transactions);
+    showData(data.transactions, "", data.currency || "$");
 } else {
     options.style += "display: none;";
 };
@@ -136,7 +151,7 @@ const deleteTransaction = (id) => {
     let data = JSON.parse(localStorage.getItem("data")) || null;
     data.transactions = data.transactions.filter((transaction) => transaction.id != id);
     localStorage.setItem("data", JSON.stringify(data));
-    showData(data.transactions);
+    showData(data.transactions, "", data.currency || "$");
 }
 
 const openDelPopUp = (id) => {
@@ -177,7 +192,7 @@ const editTransaction = (id) => {
         data = { ...data, transactions: data.transactions.filter((item) => item.id != id) };
         data.transactions = [...data.transactions, transaction];
         data.transactions = data.transactions.sort((a, b) => a.id - b.id)
-        showData(data.transactions);
+        showData(data.transactions, "", data.currency || "$");
         closeEditForm(id);
         localStorage.setItem("data", JSON.stringify(data));
     })
@@ -190,10 +205,10 @@ const searchInput = document.getElementById("search");
 searchInput.addEventListener("input", (event) => {
     try {
         const re = new RegExp(event.target.value, "i");
-        const transactions = JSON.parse(localStorage.getItem("transactions")) || null;
-        const newTransactions = event.target.value ? transactions.filter((item) => (item.description).match(re)) : null;
+        const data = JSON.parse(localStorage.getItem("data")) || null;
+        const newTransactions = event.target.value ? data.transactions.filter((item) => (item.description).match(re)) : null;
 
-        showData(transactions, newTransactions);
+        showData(data.transactions, newTransactions, data.currency || "$");
     } catch (err) {
         console.log("Sorry, there was an error!")
     }
@@ -202,7 +217,8 @@ searchInput.addEventListener("input", (event) => {
 // Sorting functionality
 const sortingSelect = document.getElementById("sorting");
 sortingSelect.addEventListener("change", (event) => {
-    const transactions = JSON.parse(localStorage.getItem("data")).transactions || null;
+    const data = JSON.parse(localStorage.getItem("data")) || null;
+    const transactions = data.transactions;
     let newTransactions;
 
     switch (event.target.value) {
@@ -225,7 +241,7 @@ sortingSelect.addEventListener("change", (event) => {
             newTransactions = transactions.sort((a, b) => (a.description.toUpperCase() > b.description.toUpperCase() ? 0 : -1))
     }
 
-    showData(newTransactions);
+    showData(newTransactions, "", data.currency || "$");
 })
 
 // Importing JSON
@@ -256,11 +272,11 @@ importBtn.addEventListener("click", async () => {
                 && Object.keys(json[i]).includes("description")
                 && Object.keys(json[i]).includes("category")
                 && Object.keys(json[i]).includes("createdAt")
-                && typeof(json[i].id) == "number"
-                && typeof(json[i].amount) == "number"
-                && typeof(json[i].description) == "string"
-                && typeof(json[i].category) == "string"
-                && typeof(json[i].createdAt) == "string"
+                && typeof (json[i].id) == "number"
+                && typeof (json[i].amount) == "number"
+                && typeof (json[i].description) == "string"
+                && typeof (json[i].category) == "string"
+                && typeof (json[i].createdAt) == "string"
             ) {
                 continue;
             } else {

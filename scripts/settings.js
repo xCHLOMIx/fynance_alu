@@ -4,8 +4,13 @@ const rwfTrigger = document.getElementById("rwf");
 const kshTrigger = document.getElementById("ksh");
 
 let data = JSON.parse(localStorage.getItem("data")) || null;
-
-switch (data.currency) {
+let currency;
+if (data == null || data.currency == null) {
+    currency = "$";
+} else {
+    currency = data.currency;
+}
+switch (currency) {
     case "$":
         movable.classList.add("left");
         break;

@@ -97,46 +97,48 @@ const updateTransactionList = (data) => {
 }
 
 const drawChart = (data, currency) => {
-    const sortedData = data.transactions.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
-    let sorted = [];
-    for (i = 0; i < sortedData.length; i++) {
-        let day = `${(sortedData[i].createdAt).split("-")[0]}-${(sortedData[i].createdAt).split("-")[0]}`
-        let transactionDay = {
-            day: day,
-            amount: 0
-        }
-
-        for (j = 0; j < sortedData.length; j++) {
-            let innerDay = `${(sortedData[j].createdAt).split("-")[0]}-${(sortedData[j].createdAt).split("-")[0]}`;
-
-            if (innerDay == transactionDay.day) {
-                transactionDay.amount += sortedData[j].amount;
+    if (data == null || data.transactions == null) {} else {
+        const sortedData = data.transactions.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
+        let sorted = [];
+        for (i = 0; i < sortedData.length; i++) {
+            let day = `${(sortedData[i].createdAt).split("-")[0]}-${(sortedData[i].createdAt).split("-")[0]}`
+            let transactionDay = {
+                day: day,
+                amount: 0
             }
+
+            for (j = 0; j < sortedData.length; j++) {
+                let innerDay = `${(sortedData[j].createdAt).split("-")[0]}-${(sortedData[j].createdAt).split("-")[0]}`;
+
+                if (innerDay == transactionDay.day) {
+                    transactionDay.amount += sortedData[j].amount;
+                }
+            }
+            sorted.push(transactionDay);
         }
-        sorted.push(transactionDay);
-    }
-    const sevenTransactions = sorted.filter((item, index) => index < 7);
+        const sevenTransactions = sorted.filter((item, index) => index < 7);
 
-    let sum = 0;
-    for (i = 0; i < sevenTransactions.length; i++) {
-        sum += sevenTransactions[i].amount;
-    }
+        let sum = 0;
+        for (i = 0; i < sevenTransactions.length; i++) {
+            sum += sevenTransactions[i].amount;
+        }
 
-    const htmlCode = sevenTransactions.map((item) => (
-        `
+        const htmlCode = sevenTransactions.map((item) => (
+            `
             <div class="bar" style="height: ${item.amount / sum * 100}%"></div>
         `
-    )).join("");
+        )).join("");
 
-    bars.innerHTML = htmlCode;
+        bars.innerHTML = htmlCode;
 
-    const labels = sevenTransactions.map((item) => (
-        `
+        const labels = sevenTransactions.map((item) => (
+            `
             <span>${item.day}</span>
         `
-    )).join("");
+        )).join("");
 
-    labelsEl.innerHTML = labels;
+        labelsEl.innerHTML = labels;
+    }
 };
 
 const data = JSON.parse(localStorage.getItem("data")) || null;

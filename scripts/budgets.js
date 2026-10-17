@@ -2,6 +2,7 @@ const form_trigger = document.getElementById("add_budget");
 const form_close = document.getElementById("form_close");
 const form_container = document.getElementById("form-container");
 const form = document.getElementById("form");
+const exportButton = document.getElementById("export");
 
 form_trigger.addEventListener("click", () => {
     form_container.classList.remove("hidden");
@@ -152,7 +153,11 @@ const showData = (data, mark, currency) => {
 }
 
 const data = JSON.parse(localStorage.getItem("data")) || null;
-if (data != null && data.budgets) showData(data.budgets, "", data.currency || "$");
+if (data != null && data.budgets) {
+    showData(data.budgets, "", data.currency || "$");
+} else {
+    exportButton.classList.add("hidden");
+};
 
 const deleteBudget = (id) => {
     let data = JSON.parse(localStorage.getItem("data")) || null;
@@ -307,7 +312,7 @@ importButton.addEventListener("click", async () => {
             ) {
                 continue;
             } else {
-                console.log("Failed");
+                alert("Invalid JSON.")
                 return false;
             }
         }
@@ -326,4 +331,21 @@ importButton.addEventListener("click", async () => {
         localStorage.setItem("data", JSON.stringify(data));
         showData(data.budgets);
     }
+});
+
+let exportHandle;
+exportButton.addEventListener("click", async () => {
+    const data = JSON.stringify(JSON.parse(localStorage.getItem("data")).budgets);
+    exportHandle = await window.showSaveFilePicker({
+        types: [{
+            description: "JSON",
+            accept: {
+                "json/*": [".json"]
+            }
+        }]
+    });
+
+    let stream = await exportHandle.createWritable();
+    await stream.write(data);
+    await stream.close;
 });

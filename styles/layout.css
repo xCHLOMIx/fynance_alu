@@ -6,7 +6,7 @@
   font-family: Inter;
 }
 
-*:focus {
+button:focus, select:focus {
   outline: 3px solid black;
 }
 

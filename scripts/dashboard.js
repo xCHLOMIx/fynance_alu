@@ -54,7 +54,7 @@ const updateTransactionsData = (data) => {
         }
 
         topCategoryEl.innerText = topCategory.category;
-        transactions_amount.textContent = data.currency + " " + (totalTransactionsAmount * rate).toLocaleString();
+        transactions_amount.textContent = data.currency || "$" + " " + (totalTransactionsAmount * rate).toLocaleString();
         transactions_number.textContent = data.transactions.length;
     }
 }
@@ -101,14 +101,14 @@ const drawChart = (data, currency) => {
         const sortedData = data.transactions.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
         let sorted = [];
         for (i = 0; i < sortedData.length; i++) {
-            let day = `${(sortedData[i].createdAt).split("-")[0]}-${(sortedData[i].createdAt).split("-")[0]}`
+            let day = `${(sortedData[i].createdAt).split("-")[0]}/${(sortedData[i].createdAt).split("-")[0]}`
             let transactionDay = {
                 day: day,
                 amount: 0
             }
 
             for (j = 0; j < sortedData.length; j++) {
-                let innerDay = `${(sortedData[j].createdAt).split("-")[0]}-${(sortedData[j].createdAt).split("-")[0]}`;
+                let innerDay = `${(sortedData[j].createdAt).split("-")[0]}/${(sortedData[j].createdAt).split("-")[0]}`;
 
                 if (innerDay == transactionDay.day) {
                     transactionDay.amount += sortedData[j].amount;

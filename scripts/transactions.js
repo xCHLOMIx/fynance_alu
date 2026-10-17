@@ -40,6 +40,7 @@ const formHandle = () => {
     const newData = JSON.parse(localStorage.getItem("data")) || null;
     if (newData.transactions != null) showData(newData.transactions, "", data.currency || "$");
     form_container.classList.add("hidden");
+    exportButton.classList.remove("hidden");
 }
 
 form.addEventListener("submit", (event) => {

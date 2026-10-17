@@ -54,9 +54,9 @@ button.primary span {
 
 div.form-container {
   background: white;
-  position: absolute;
+  position: fixed;
   right: 0;
-  top: 0;
+  top: 86px;
   height: 100%;
   transition: transform 0.3s ease;
   padding: 24px 24px 96px 24px;
@@ -217,7 +217,7 @@ button#edit {
 }
 
 .del-pop {
-  position: absolute;
+  position: fixed;
   background-color: #00000055;
   padding: 14px;
   width: 100%;
@@ -228,6 +228,7 @@ button#edit {
   justify-content: center;
   align-items: center;
   transition: 0.3s ease;
+  z-index: 50;
 }
 
 .hidden-pop {
@@ -276,6 +277,10 @@ button#delete:hover {
   align-items: start;
   justify-content: space-between;
   flex-direction: column;
+}
+
+.hid {
+  visibility: hidden;
 }
 
 @media screen and (width >= 768px) {

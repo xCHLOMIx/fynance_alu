@@ -6,6 +6,14 @@
   font-family: Inter;
 }
 
+*:focus {
+  outline: 3px solid black;
+}
+
+#search:focus {
+  outline: 2px solid black;
+}
+
 header h1 {
   font-family: Instrument Serif;
   font-style: italic;

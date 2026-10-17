@@ -265,26 +265,30 @@ importBtn.addEventListener("click", async () => {
     const json = JSON.parse(fileText).transactions;
 
     function verifyJSON(json) {
-        const re = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/
-        for (i = 0; i < json.length; i++) {
-            if (
-                Object.keys(json[i]).includes("id")
-                && Object.keys(json[i]).includes("amount")
-                && Object.keys(json[i]).includes("description")
-                && Object.keys(json[i]).includes("category")
-                && Object.keys(json[i]).includes("createdAt")
-                && typeof (json[i].id) == "number"
-                && typeof (json[i].amount) == "number"
-                && typeof (json[i].description) == "string"
-                && typeof (json[i].category) == "string"
-                && typeof (json[i].createdAt) == "string"
-            ) {
-                continue;
-            } else {
-                return false;
+        if (!json) {
+            alert("No transaction data found!");
+            return false;
+        } else {
+            for (i = 0; i < json.length; i++) {
+                if (
+                    Object.keys(json[i]).includes("id")
+                    && Object.keys(json[i]).includes("amount")
+                    && Object.keys(json[i]).includes("description")
+                    && Object.keys(json[i]).includes("category")
+                    && Object.keys(json[i]).includes("createdAt")
+                    && typeof (json[i].id) == "number"
+                    && typeof (json[i].amount) == "number"
+                    && typeof (json[i].description) == "string"
+                    && typeof (json[i].category) == "string"
+                    && typeof (json[i].createdAt) == "string"
+                ) {
+                    continue;
+                } else {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
     }
 
     if (verifyJSON(json)) {
@@ -293,7 +297,13 @@ importBtn.addEventListener("click", async () => {
         if (data == null || data.transactions == null) {
             data = { ...data, transactions: json };
         } else {
-            data.transactions = [...data.transactions, json];
+            let newJSON = json;
+            for (i = 0; i < json.length; i++) {
+                newJSON[i].id = data.transactions[data.transactions.length - 1].id + (i + 1);
+            }
+            let newTransactions = data.transactions.concat(newJSON);
+
+            data = { ...data, transactions: newTransactions };
         }
 
         localStorage.setItem("data", JSON.stringify(data));
